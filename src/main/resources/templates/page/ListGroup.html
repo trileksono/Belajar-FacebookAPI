@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<div th:fragment="content">
+    <div id="page-wrap">
+        <table id="tbl_group" class="table table-striped" style="width: 100%">
+            <thead>
+            <tr>
+                <th width="80%">Nama group</th>
+                <th width='10%'>Privacy</th>
+                <th width='10%'></th>
+                <th></th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+
+    <script type="text/javascript" th:inline="javascript">
+        /*<![CDATA[*/
+        $(document).ready(function () {
+            getGroupPost();
+        });
+
+        function getGroupPost() {
+            var id = Cookies.get('idGroup');
+            $('#tbl_group').empty();
+            var table = $('#tbl_group').DataTable({
+                "paging": false,
+                "ordering": false,
+                "info": false,
+                "searching": false,
+                "processing": true,
+                "serverSide": true,
+                "destroy": true,
+                "ajax": '/group/id/' + id,
+                "columns": [
+                    {"data": "id_post"},
+                    {"data": "message"},
+                    {
+                        "defaultContent": '<button class="btn btn-info btn-sm">' + 'Tampilkan' + '</button>'
+                    }
+//                                '<a class="btn btn-info btn-sm" href=#/' + + '>' + 'Edit' + '</a>'}
+                ]
+            });
+        }
+        /*]]>*/
+    </script>
+</div>
+</body>
+</html>

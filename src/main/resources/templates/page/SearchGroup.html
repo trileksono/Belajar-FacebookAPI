@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<div th:fragment="content">
+    <form action='#'>
+        <div class="input-group">
+            <input id="txtNamaGroup" type="text" class="form-control" placeholder="Search"/>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" onclick="javasript:getGroupLike()">
+                            <span class="glyphicon glyphicon-search">
+                                <span class="sr-only">Search</span>
+                            </span>
+                        </button>
+                    </span>
+        </div>
+    </form>
+
+    <table id="tbl_group" class="table table-striped" style="width: 100%">
+        <thead>
+        <tr>
+            <th width="80%">Nama group</th>
+            <th width='10%'>Privacy</th>
+            <th width='10%'></th>
+            <th></th>
+        </tr>
+        </thead>
+    </table>
+
+
+    <script type="text/javascript" th:inline="javascript">
+        /*<![CDATA[*/
+        $('#txtNamaGroup').on("keypress", function (e) {
+            if (e.keyCode === 13) {
+                console.log("enter");
+                getGroupLike();
+            }
+        });
+
+        function getGroupLike() {
+            var keyword = $('#txtNamaGroup').val();
+            $('#tbl_group').empty();
+            var table = $('#tbl_group').DataTable({
+                "paging": false,
+                "ordering": false,
+                "info": false,
+                "searching": false,
+                "processing": true,
+                "serverSide": true,
+                "destroy": true,
+                "ajax": '/group/' + keyword,
+                "columns": [
+                    {"data": "name"},
+                    {"data": "privacy"},
+                    {
+                        "defaultContent": '<button class="btn btn-info btn-sm">Crawl sample</button>'
+                    }
+//                                '<a class="btn btn-info btn-sm" href=#/' + + '>' + 'Edit' + '</a>'}
+                ]
+            });
+
+            $('#tbl_group tbody').on('click', 'button', function () {
+                var data = table.row($(this).parents('tr')).data();
+
+//                        if (data.privacy === 'CLOSED') {
+//                            alert("Tidak dapat menampilkan group dengan privacy Closed");
+//                            return;
+//                        }
+//                        Cookies.set("idGroup",data.id);
+//                        window.location.href = "http://localhost:8080/page/GroupPost";
+            });
+        }
+
+        /*]]>*/
+    </script>
+</div>
+</body>
+</html>

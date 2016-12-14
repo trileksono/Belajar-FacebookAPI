@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Getting Started: Serving Web Content</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<div th:fragment="content">
+  <div id="page-wrap">
+    <div class="panel panel-info">
+      <div class="panel-heading" id="accordion">
+        <svg class="glyph stroked two-messages">
+          <use xlink:href="#stroked-two-messages"></use>
+        </svg>
+        Chat
+      </div>
+      <div class="panel-body">
+        <div class="form-group">
+          <label>
+            Group member
+          </label>
+          <select class="productName form-control" multiple="multiple" required="required"></select>
+        </div>
+        <button type="submit" class="btn btn-primary" onclick="sendTesting();">Submit Button</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+    $(".productName").select2({
+      minimumInputLength: 3,
+      ajax: {
+        url: '/group/member',
+        dataType: 'json',
+        type: "GET",
+        delay: 250,
+        data: function (term) {
+          return {
+            name: term.term
+          };
+        },
+        processResults: function (data) {
+          // parse the results into the format expected by Select2.
+          // since we are using custom formatting functions we do not need to
+          // alter the remote JSON data
+          var results = [];
+          $.each(data, function (index, item) {
+            results.push({
+              id: item.id,
+              text: item.name
+            });
+          });
+          console.log(results);
+          return {
+            results: results
+          };
+        },
+        cache: true
+      }
+    });
+
+    function sendTesting() {
+      var param = '';
+      var x = $(".productName").select2('val');
+      if(x === null){
+        return;
+      }
+
+      for(var i = 0; i < x.length; i++){
+        param += x[i];
+        if(i != x.length-1) param += ',';
+      }
+      $.ajax({
+        url: '/group/testing?id='+param+'&jumlah=10',
+        type: 'GET',
+        success: function () {},
+        error: function (xhr, status, error) {
+          console.log(xhr);
+        }
+      });
+    }
+    /*]]>*/
+  </script>
+</div>
+</body>
+</html>

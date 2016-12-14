@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<div th:fragment="content">
+    <div id="page-wrap">
+        <div class="panel panel-info">
+            <div class="panel-heading" id="accordion">
+                <svg class="glyph stroked two-messages">
+                    <use xlink:href="#stroked-two-messages"></use>
+                </svg>
+                Chat
+            </div>
+            <div class="panel-body">
+                <ul th:each="p : ${list}">
+                    <li class="left clearfix">
+                        <div class="chat-body clearfix">
+                            <div class="header">
+                                <strong class="primary-font" th:text="${p.namaUser}"></strong>
+                                <small class="text-muted" th:text="${p.createDate}"></small>
+                            </div>
+                            <p th:utext="${p.message}">
+                                Post
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<div th:fragment="content">
+    <div id="page-wrap">
+        <div class="panel panel-info">
+            <div class="panel-heading" id="accordion">
+                <svg class="glyph stroked two-messages">
+                    <use xlink:href="#stroked-two-messages"></use>
+                </svg>
+                Chat
+            </div>
+            <div class="panel-body">
+                <ul>
+                    <li class="left clearfix">
+                        <div class="chat-body clearfix">
+                            <div class="header">
+                                <strong class="primary-font" th:text="${post.namaUser}"></strong>
+                                <small class="text-muted" th:text="${post.createDate}"></small>
+                            </div>
+                            <p th:utext="${post.message}">
+                                Post
+                            </p>
+                        </div>
+                    </li>
+                    <div th:each="p : ${comment}">
+                        <li class="right">
+                            <div class="chat-body clearfix">
+                                <div class="header">
+                                    <strong class="pull-left primary-font" th:text="${p.namaUser}">Jane Doe</strong>
+                                    <small class="text-muted" th:text="${p.createDate}">6 mins ago</small>
+                                </div>
+                                <p th:utext="${p.message}"></p>
+                            </div>
+                        </li>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
